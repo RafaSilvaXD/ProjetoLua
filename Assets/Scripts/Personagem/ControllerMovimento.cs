@@ -39,10 +39,10 @@ public class ControllerMovimento
 
         _noChao = Physics.SphereCast(raio, 0.4f, 0.7f, _personagem.Data.Ground);
 
-        Vector3 direcaoDeMovimento = _cameraVisao.transform.TransformDirection(new Vector3(0,
+        Vector3 direcaoDeMovimento = _cameraVisao.transform.TransformDirection(new Vector3(Input.GetAxis("Horizontal"),
                                                                                            0,
-                                                                                           Input.GetAxis("Vertical")));
-        direcaoDeMovimento += Input.GetAxis("Horizontal") * _personagem.transform.right;
+                                                                                           Input.GetAxis("Vertical"))); 
+
         direcaoDeMovimento.y = 0;
 
         _personagem.Controller.Move(direcaoDeMovimento * _personagem.Data.VelocidadeDeMovimento * Time.deltaTime);
@@ -63,7 +63,7 @@ public class ControllerMovimento
 
         _personagem.Controller.Move(_velocidadeVertical * Time.deltaTime);
 
-        //RotacionarPersonagem(new Vector3(direcaoDeMovimento.x,0,direcaoDeMovimento.z));
+        RotacionarPersonagem(new Vector3(direcaoDeMovimento.x,0,direcaoDeMovimento.z));
     }
 
     private void RotacionarPersonagem(Vector3 direcao)
