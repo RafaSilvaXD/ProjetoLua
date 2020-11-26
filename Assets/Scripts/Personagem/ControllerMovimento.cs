@@ -39,7 +39,7 @@ public class ControllerMovimento
 
         _noChao = Physics.SphereCast(raio, 0.4f, 0.7f, _personagem.Data.Ground);
 
-        Vector3 direcaoDeMovimento = _cameraVisao.transform.TransformDirection(new Vector3(Input.GetAxis("Horizontal"),
+        Vector3 direcaoDeMovimento = _cameraVisao.transform.TransformDirection(new Vector3(0,
                                                                                            0,
                                                                                            Input.GetAxis("Vertical"))); 
 
@@ -47,7 +47,7 @@ public class ControllerMovimento
 
         _personagem.Controller.Move(direcaoDeMovimento * _personagem.Data.VelocidadeDeMovimento * Time.deltaTime);
 
-
+        //modificar
 
         _velocidadeVertical.y += Physics.gravity.y * Time.deltaTime * ControllerGame.Instance.Config.ModificadorDeGracidade;
 
@@ -72,6 +72,7 @@ public class ControllerMovimento
         { 
             _personagem.transform.rotation = Quaternion.LookRotation(direcao, Vector3.up);
         } 
+        
     }
    
     #endregion
