@@ -17,5 +17,7 @@ MonoBehaviour:
   _ground:
     serializedVersion: 2
     m_Bits: 256
-  _distanciaDeDeteccao: 2
-  _forcaSalto: 100
+  _distanciaDeDeteccao: 1.5
+  _forcaSalto: 6
+  _projetil: {fileID: 4984573131078241515, guid: 0f4fe124cb92a8b4882bd319779aeeb3,
+    type: 3}

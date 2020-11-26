@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Prototipo/Data Personagem")]
 public class DataPersonagem : ScriptableObject
 {
-    #region Variaveis privadas
+     #region Variaveis privadas
     [SerializeField] private float _velocidadeDeMovimento;
 
     [SerializeField] private float _vidaMaxima;
@@ -15,6 +15,9 @@ public class DataPersonagem : ScriptableObject
     [SerializeField] private float _distanciaDeDeteccao;
 
     [SerializeField] private float _forcaSalto;
+
+    [SerializeField] private GameObject _projetil;
+
 
     #endregion
 
@@ -28,5 +31,7 @@ public class DataPersonagem : ScriptableObject
     public float DistanciarRaycastChao { get => _distanciaDeDeteccao; }
 
     public float ForcaPulo { get => _forcaSalto; }
+
+    public GameObject Projetil { get => _projetil; }
     #endregion
 }

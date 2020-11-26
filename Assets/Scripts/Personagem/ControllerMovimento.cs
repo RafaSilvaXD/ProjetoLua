@@ -6,7 +6,8 @@ public class ControllerMovimento
 {
     #region Variaveis privadas
     private Character _personagem;
-    private Camera _cameraVisao; 
+    private Camera _cameraVisao;
+    private Vector3 _velocidadeVertical;
     [SerializeField] private bool _noChao;
     #endregion
 
@@ -20,6 +21,7 @@ public class ControllerMovimento
         _personagem = personagem;
         _cameraVisao = Camera.main;
     }
+     
     #endregion
 
     #region Metodos Propios
@@ -33,19 +35,35 @@ public class ControllerMovimento
     {
         if (!permissao) return;
 
-        _noChao = Physics.Raycast(_personagem.transform.position, Vector3.down, _personagem.Data.DistanciarRaycastChao, _personagem.Data.Ground);
+        Ray raio = new Ray(_personagem.transform.position, Vector3.down);
 
-        Vector3 direcaoDeMovimento = _cameraVisao.transform.TransformDirection(new Vector3(Input.GetAxis("Horizontal"),
+        _noChao = Physics.SphereCast(raio, 0.4f, 0.7f, _personagem.Data.Ground);
+
+        Vector3 direcaoDeMovimento = _cameraVisao.transform.TransformDirection(new Vector3(0,
                                                                                            0,
                                                                                            Input.GetAxis("Vertical")));
-
+        direcaoDeMovimento += Input.GetAxis("Horizontal") * _personagem.transform.right;
         direcaoDeMovimento.y = 0;
-
-        direcaoDeMovimento = direcaoDeMovimento.normalized;
 
         _personagem.Controller.Move(direcaoDeMovimento * _personagem.Data.VelocidadeDeMovimento * Time.deltaTime);
 
-        RotacionarPersonagem(direcaoDeMovimento);
+
+
+        _velocidadeVertical.y += Physics.gravity.y * Time.deltaTime * ControllerGame.Instance.Config.ModificadorDeGracidade;
+
+        if (_noChao && _velocidadeVertical.y < 0)
+        {
+            _velocidadeVertical.y = 0;
+        } 
+
+        if(Input.GetKeyDown(KeyCode.Space) && _noChao)
+        {
+            _velocidadeVertical.y = Mathf.Sqrt(_personagem.Data.ForcaPulo * -2 * Physics.gravity.y);
+        }
+
+        _personagem.Controller.Move(_velocidadeVertical * Time.deltaTime);
+
+        //RotacionarPersonagem(new Vector3(direcaoDeMovimento.x,0,direcaoDeMovimento.z));
     }
 
     private void RotacionarPersonagem(Vector3 direcao)
@@ -55,5 +73,6 @@ public class ControllerMovimento
             _personagem.transform.rotation = Quaternion.LookRotation(direcao, Vector3.up);
         } 
     }
+   
     #endregion
 }
